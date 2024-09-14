@@ -442,7 +442,7 @@ Class.minion = {
     BODY: {
         FOV: 0.5,
         SPEED: 3,
-        ACCELERATION: 0.4,
+        ACCELERATION: 1,
         HEALTH: 5,
         SHIELD: 0,
         DAMAGE: 1.2,
@@ -598,7 +598,6 @@ Class.shotTrapBox = {
 Class.pillbox = {
     PARENT: "setTrap",
     LABEL: "Pillbox",
-    CONTROLLERS: ["nearestDifferentMaster"],
     INDEPENDENT: true,
     DIE_AT_RANGE: true,
     TURRETS: [
@@ -611,7 +610,6 @@ Class.pillbox = {
 Class.unsetPillbox = {
     PARENT: "unsetTrap",
     LABEL: "Pillbox",
-    CONTROLLERS: ["nearestDifferentMaster"],
     INDEPENDENT: true,
     DIE_AT_RANGE: true,
     TURRETS: [

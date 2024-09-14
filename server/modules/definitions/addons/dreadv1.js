@@ -2,10 +2,9 @@ const { combineStats, makeAuto, weaponArray, makeTurret } = require('../facilita
 const { smshskl, base, basePolygonDamage, basePolygonHealth } = require('../constants.js');
 const g = require('../gunvals.js');
 const dreadnoughtBody = {
-    SPEED: base.SPEED * 0.5,
-    HEALTH: base.HEALTH * 7,
-    DAMAGE: base.DAMAGE * 3.5,
-    PENETRATION: base.PENETRATION * 2,
+    SPEED: base.SPEED * 0.6,
+    HEALTH: base.HEALTH * 4,
+    DAMAGE: base.DAMAGE * 2.5,
     SHIELD: base.SHIELD * 2.5,
     FOV: base.FOV * 1.25,
     DENSITY: base.DENSITY * 6,
@@ -19,32 +18,35 @@ g.dreadv1Generic = {
 g.dreadv1Sniper = {
 	speed: 1.07,
 	maxSpeed: 1.07,
-	health: 1.1,
+	health: 1.2,
+	damage: 1.1,
 	reload: 1.13,
-	density: 1.6,
+	density: 1.8,
 	pen: 1.05,
-	resist: 1.1,
+	resist: 1.2,
 	range: 0.8,
 }
 g.dreadv1Slow = {
 	health: 1.3,
+	damage: 1.25,
+	resist: 1.1,
 	speed: 0.65,
 	maxSpeed: 0.65,
-};
+}
 g.dreadv1Drone = {
-	health: 1.25,
-	speed: 0.68,
-	maxSpeed: 0.68,
-	reload: 0.8,
+	health: 1.1,
+	speed: 0.77,
+	maxSpeed: 0.77,
+	reload: 1.65,
 	size: 1.2,
 	recoil: 0,
 }
 g.dreadv1Trap = {
 	range: 1.3,
 	shudder: 0.2,
-	speed: 1.05,
+	speed: 0.95,
 	reload: 2.8,
-	damage: 1.8,
+	damage: 1.45,
 	health: 1.35,
 	resist: 1.1,
 	size: 1.25,
@@ -269,7 +271,7 @@ Class.dreadv1BodyTurret = makeTurret({
 	GUNS: [{
 		POSITION: [22, 10, 1, 0, 0, 0, 0],
 		PROPERTIES: {
-			SHOOT_SETTINGS: combineStats([g.basic, g.pelleter, g.power, { recoil: 0.7 }, g.turret, { size: 0.8, health: 0.75, speed: 0.4, maxSpeed: 0.4, reload: 0.7 }]),
+			SHOOT_SETTINGS: combineStats([g.basic, g.pelleter, g.power, { recoil: 0.7 }, g.turret, { size: 0.8, damage: 1.05, speed: 0.4, maxSpeed: 0.4, reload: 0.7 }]),
 			TYPE: "bullet"
 		}
 	}]
@@ -496,7 +498,7 @@ Class.peacekeeperOfficialV1 = {
 	GUNS: weaponArray({
 		POSITION: [17.5, 9, 1, 0, 0, 0, 0],
 		PROPERTIES: {
-			SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.destroyer, g.dreadv1Generic, g.dreadv1Slow, {reload: 1.3, health: 1.3, range: 1.1}]),
+			SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.destroyer, g.dreadv1Generic, g.dreadv1Slow, {reload: 1.3, health: 1.2, range: 1.1}]),
 			TYPE: "bullet",
 		}
 	}, 3)
@@ -535,7 +537,7 @@ Class.inquisitorOfficialV1 = {
 	GUNS: weaponArray({
 		POSITION: [7, 7.5, 1.3, 7.5, 0, 0, 0],
 		PROPERTIES: {
-			SHOOT_SETTINGS: combineStats([g.drone, g.overseer, g.dreadv1Drone, {speed: 0.95, maxSpeed: 0.95, damage: 0.9, health: 0.92}]),
+			SHOOT_SETTINGS: combineStats([g.drone, g.overseer, g.dreadv1Drone, {speed: 0.95, maxSpeed: 0.95, damage: 0.93, health: 0.92}]),
 			TYPE: "drone",
 			AUTOFIRE: true,
 			SYNCS_SKILLS: true,
@@ -555,12 +557,13 @@ Class.assailantOfficialV1 = {
 		}, {
 			POSITION: [1.5, 10, 1, 14.25, 0, 0, 0],
 			PROPERTIES: {
-				MAX_CHILDREN: 4,
-				SHOOT_SETTINGS: combineStats([g.factory, g.overseer, g.dreadv1Drone, {damage: 0.6}]),
-				TYPE: ["minion", {GUN_STAT_SCALE: {reload: 1.333, health: 0.7, speed: 0.8, maxSpeed: 0.8}}],
+				SHOOT_SETTINGS: combineStats([g.factory, g.overseer, g.dreadv1Drone, {damage: 0.45}]),
+				TYPE: ["minion", {GUN_STAT_SCALE: {reload: 1.5, health: 0.75, speed: 0.8, maxSpeed: 0.8}}],
 				STAT_CALCULATOR: "drone",
 				AUTOFIRE: true,
-				SYNCS_SKILLS: true
+				SYNCS_SKILLS: true,
+				WAIT_TO_CYCLE: true,
+				MAX_CHILDREN: 4,
 			}
 		}, {
 			POSITION: [11.5, 10, 1, 0, 0, 0, 0]
@@ -642,7 +645,7 @@ Class.minotaurOfficialV1 = {
 		}, {
 			POSITION: [3, 9.5, 1.6, 13, 0, 0, 0],
 			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.trap, g.setTrap, g.dreadv1Generic, g.dreadv1Slow, g.dreadv1Trap, { reload: 1.55, range: 0.93, health: 1.55 }]),
+				SHOOT_SETTINGS: combineStats([g.trap, g.setTrap, g.dreadv1Generic, g.dreadv1Slow, g.dreadv1Trap, { damage: 0.9, reload: 1.55, range: 0.93, health: 1.55 }]),
 				TYPE: ["unsetTrap", {HITS_OWN_TYPE: "never"} ],
 				STAT_CALCULATOR: "block"
 			}
@@ -731,100 +734,74 @@ if (!enableHealers) {
 	t1Bodies.splice(4, 1); // Remove Medicare if healers are disabled
 }
 
-// Build both tiers of dreads
-for (let primary of Class.dreadOfficialV1[`UPGRADES_TIER_${tier1}`]) {
-	let primaryName = primary;
-	primary = ensureIsClass(primary);
-	primary[`UPGRADES_TIER_${tier1}`] = [];
+function mergeDreads(dread1, dread2, sourceDread, tier) {
+	let dread1Name = dread1;
+	let dread2Name = dread2;
 
-	for (let secondary of t1Bodies) {
-		let secondaryName = secondary;
-		secondary = ensureIsClass(secondary);
+	dread1 = ensureIsClass(dread1);
+	dread2 = ensureIsClass(dread2);
 
-		let GUNS = [],
-			TURRETS = [],
-			LABEL = primary.LABEL + "-" + secondary.LABEL,
-			BODY = JSON.parse(JSON.stringify(dreadnoughtBody)),
-			UPGRADE_TOOLTIP = (primary.UPGRADE_TOOLTIP ?? "") + " + " + (secondary.UPGRADE_TOOLTIP ?? "");
+	let GUNS = [],
+		TURRETS = [],
+		LABEL = `${dread1.LABEL}-${dread2.LABEL}`,
+		BODY = JSON.parse(JSON.stringify(dreadnoughtBody)),
+		UPGRADE_TOOLTIP = `${dread1.UPGRADE_TOOLTIP ?? ""}+${dread2.UPGRADE_TOOLTIP ?? ""}`;
 
-		// Label it
-		if (primary.LABEL == secondary.LABEL) LABEL = primary.LABEL;
-		if (primary.UPGRADE_TOOLTIP == secondary.UPGRADE_TOOLTIP) UPGRADE_TOOLTIP = primary.UPGRADE_TOOLTIP;
+	// Label it
+	if (dread1.LABEL == dread2.LABEL) LABEL = dread1.LABEL;
+	if (dread1.UPGRADE_TOOLTIP == dread2.UPGRADE_TOOLTIP) UPGRADE_TOOLTIP = dread1.UPGRADE_TOOLTIP;
 
-		// Guns
-		if (primary.GUNS) GUNS.push(...primary.GUNS);
-		for (let g in secondary.GUNS) {
-			let POSITION = JSON.parse(JSON.stringify(secondary.GUNS[g].POSITION)),
-				PROPERTIES = secondary.GUNS[g].PROPERTIES;
-			POSITION[5] += 60;
-			GUNS.push({ POSITION, PROPERTIES });
+	// Guns
+	if (dread1.GUNS) GUNS.push(...dread1.GUNS);
+	for (let g in dread2.GUNS) {
+		let POSITION = JSON.parse(JSON.stringify(dread2.GUNS[g].POSITION)),
+			PROPERTIES = dread2.GUNS[g].PROPERTIES;
+		POSITION[5] += 60;
+		GUNS.push({ POSITION, PROPERTIES });
+	}
+
+	// Turrets
+	if (dread1.TURRETS) TURRETS.push(...dread1.TURRETS);
+	if (dread2.TURRETS) TURRETS.push(...dread2.TURRETS);
+
+	// Body
+	if (dread1.BODY) {
+		for (let m in dread1.BODY) {
+			BODY[m] += (dread1.BODY[m] - dreadnoughtBody[m]) / 2;
 		}
-
-		// Turrets
-		if (primary.TURRETS) TURRETS.push(...primary.TURRETS);
-		if (secondary.TURRETS) TURRETS.push(...secondary.TURRETS);
-
-		// Body
-		if (primary.BODY) for (let m in primary.BODY) BODY[m] *= primary.BODY[m];
-		if (secondary.BODY) for (let m in secondary.BODY) BODY[m] *= secondary.BODY[m];
-
-		// Definition name
-		let definitionName = primaryName + secondaryName;
-
-		// Actually make that guy
-		Class[definitionName] = {
-			PARENT: "genericDreadnought1",
-			BODY, LABEL, UPGRADE_TOOLTIP, GUNS, TURRETS,
-		};
-		Class[primaryName][`UPGRADES_TIER_${tier1}`].push(definitionName);
-		Class[definitionName][`UPGRADES_TIER_${tier2}`] = [];
-
-		// Compile T2
-		for (let primary2 of primary.UPGRADES_TIER_M1) {
-			let primaryName2 = primary2;
-			primary2 = ensureIsClass(primary2);
-
-			for (let secondary2 of secondary.UPGRADES_TIER_M1) {
-				let secondaryName = secondary2;
-				secondary2 = ensureIsClass(secondary2);
-
-				let GUNS = [],
-					TURRETS = [],
-					LABEL = primary2.LABEL + "-" + secondary2.LABEL,
-					BODY = JSON.parse(JSON.stringify(dreadnoughtBody)),
-					UPGRADE_TOOLTIP = (primary2.UPGRADE_TOOLTIP ?? "") + " + " + (secondary2.UPGRADE_TOOLTIP ?? "");
-
-				// Label it
-				if (primary2.LABEL == secondary2.LABEL) LABEL = primary2.LABEL;
-				if (primary2.UPGRADE_TOOLTIP == secondary2.UPGRADE_TOOLTIP) UPGRADE_TOOLTIP = primary2.UPGRADE_TOOLTIP;
-
-				// Guns
-				if (primary2.GUNS) GUNS.push(...primary2.GUNS);
-				for (let g in secondary2.GUNS) {
-					let POSITION = JSON.parse(JSON.stringify(secondary2.GUNS[g].POSITION)),
-						PROPERTIES = secondary2.GUNS[g].PROPERTIES;
-					POSITION[5] += 60;
-					GUNS.push({ POSITION, PROPERTIES });
-				}
-
-				// Turrets
-				if (primary2.TURRETS) TURRETS.push(...primary2.TURRETS);
-				if (secondary2.TURRETS) TURRETS.push(...secondary2.TURRETS);
-
-				// Body
-				if (primary2.BODY) for (let m in primary2.BODY) BODY[m] *= primary2.BODY[m];
-				if (secondary2.BODY) for (let m in secondary2.BODY) BODY[m] *= secondary2.BODY[m];
-
-				// Definition name
-				let definitionName2 = primaryName2 + secondaryName;
-
-				// Actually make that guy
-				Class[definitionName2] = {
-					PARENT: "genericDreadnought1",
-					BODY, LABEL, UPGRADE_TOOLTIP, GUNS, TURRETS
-				};
-				Class[definitionName][`UPGRADES_TIER_${tier2}`].push(definitionName2);
-			}
+	}
+	if (dread2.BODY) {
+		for (let m in dread2.BODY) {
+			BODY[m] += (dread2.BODY[m] - dreadnoughtBody[m]) / 2;
 		}
+	}
+
+	// Definition name
+	let definitionName = dread1Name + dread2Name;
+
+	// Save definition to Class
+	Class[definitionName] = {
+		PARENT: "genericDreadnought1",
+		BODY, LABEL, UPGRADE_TOOLTIP, GUNS, TURRETS,
+	}
+
+	// Save upgrade to previous dread
+	let upgradeLevel = `UPGRADES_TIER_${eval(`tier${tier}`)}`;
+	util.forcePush(Class[sourceDread], upgradeLevel, definitionName);
+	
+	// Generate new dreads recursively
+	if (!dread1.UPGRADES_TIER_M1 || !dread2.UPGRADES_TIER_M1) return;
+
+	for (let upgrade1 of dread1.UPGRADES_TIER_M1) {
+		for (let upgrade2 of dread2.UPGRADES_TIER_M1) {
+			mergeDreads(upgrade1, upgrade2, definitionName, tier + 1);
+		}
+	}
+}
+
+// Initiate dread merge
+for (let branch1 of Class.dreadOfficialV1[`UPGRADES_TIER_${tier1}`]) {
+	for (let branch2 of t1Bodies) {
+		mergeDreads(branch1, branch2, branch1, 1);
 	}
 }

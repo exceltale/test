@@ -100,4 +100,4 @@ exports.nameLists = {
 
 exports.chooseBotName = () => exports.choose(exports.nameLists.bots);
 
-exports.chooseBossName = (code, amount) => code in exports.nameLists ? exports.chooseN(exports.nameLists[code], amount) : undefined;
+exports.chooseBossName = (code, amount) => code in exports.nameLists ? exports.chooseN(exports.nameLists[code], amount) : [];

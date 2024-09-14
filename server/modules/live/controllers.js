@@ -392,7 +392,7 @@ class io_onlyAcceptInArc extends IO {
 class io_stackGuns extends IO {
     constructor(body, opts = {}) {
         super(body);
-        this.timeUntilFire = opts.timeUntilFire || 0.3;
+        this.stackAtTime = opts.stackAtTime || 0.2;
     }
     think ({ target }) {
         //why even bother?
@@ -401,21 +401,21 @@ class io_stackGuns extends IO {
         }
 
         //find gun that is about to shoot
-        let lowestReadiness = Infinity,
+        let lowestTimeToFire = Infinity,
             readiestGun;
         for (let i = 0; i < this.body.guns.length; i++) {
             let gun = this.body.guns[i];
             if (!gun.canShoot || !gun.stack) continue;
             
-            let readiness = 1 - gun.cycleTimer;
-            if (lowestReadiness > readiness) {
-                lowestReadiness = readiness;
+            let timeToFire = (1 - gun.cycleTimer) / (gun.shootSettings.reload * gun.reloadRateFactor * Config.runSpeed);
+            if (lowestTimeToFire > timeToFire) {
+                lowestTimeToFire = timeToFire;
                 readiestGun = gun;
             }
         }
 
         //if we aren't ready, don't spin yet
-        if (!readiestGun || (this.timeUntilFire && this.timeUntilFire < lowestReadiness)) {
+        if (!readiestGun || (this.stackAtTime && lowestTimeToFire > this.stackAtTime)) {
             return;
         }
 

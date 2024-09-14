@@ -260,10 +260,6 @@ Class.swordOfficialV2 = {
 		},
 	}, 2),
 }
-Class.sword2OfficialV2 = {
-	PARENT: "swordOfficialV2",
-	BATCH_UPGRADES: true,
-}
 Class.pacifierOfficialV2 = {
 	PARENT: "genericEggnought",
 	LABEL: "Pacifier",
@@ -275,10 +271,6 @@ Class.pacifierOfficialV2 = {
 		},
 	}, 2),
 }
-Class.pacifier2OfficialV2 = {
-	PARENT: "pacifierOfficialV2",
-	BATCH_UPGRADES: true,
-}
 Class.peacekeeperOfficialV2 = {
 	PARENT: "genericEggnought",
 	LABEL: "Peacekeeper",
@@ -289,10 +281,6 @@ Class.peacekeeperOfficialV2 = {
 			TYPE: "bullet",
 		},
 	}, 2),
-}
-Class.peacekeeper2OfficialV2 = {
-	PARENT: "peacekeeperOfficialV2",
-	BATCH_UPGRADES: true,
 }
 Class.invaderOfficialV2 = {
 	PARENT: "genericEggnought",
@@ -314,10 +302,6 @@ Class.invaderOfficialV2 = {
 		},
 	}, 2),
 }
-Class.invader2OfficialV2 = {
-	PARENT: "invaderOfficialV2",
-	BATCH_UPGRADES: true,
-}
 Class.centaurOfficialV2 = {
 	PARENT: "genericEggnought",
 	LABEL: "Centaur",
@@ -333,10 +317,6 @@ Class.centaurOfficialV2 = {
 			},
 		},
 	], 2),
-}
-Class.centaur2OfficialV2 = {
-	PARENT: "centaurOfficialV2",
-	BATCH_UPGRADES: true,
 }
 
 // T1 Bodies
@@ -1912,22 +1892,40 @@ Class.pegasusOfficialV2 = {
 	],
 }
 
+// Generate split upgrades buffer upgrades
+const firstTier = ['sword', 'pacifier', 'peacekeeper', 'invader', 'centaur'];
+for (let def of firstTier) {
+	let newDef = `${def}2OfficialV2`;
+	let originalDef = `${def}OfficialV2`;
+	Class[newDef] = dereference(originalDef);
+	Class[newDef].BATCH_UPGRADES = true;
+	
+	// Save to upgrades
+	util.forcePush(Class.dreadOfficialV2, 'UPGRADES_TIER_0', [newDef, "dreadBodyOfficialV2"]);
+	util.forcePush(Class.dreadWeaponOfficialV2, 'UPGRADES_TIER_0', originalDef);
+}
+
+/*
+The above does the following:
+
+Class.dreadOfficialV2.UPGRADES_TIER_0 = [
+	["sword2OfficialV2", "dreadBodyOfficialV2",],
+	["pacifier2OfficialV2", "dreadBodyOfficialV2"],
+	["peacekeeper2OfficialV2", "dreadBodyOfficialV2"],
+	["invader2OfficialV2", "dreadBodyOfficialV2"],
+	["centaur2OfficialV2", "dreadBodyOfficialV2"],
+];
+
+Class.dreadWeaponOfficialV2.UPGRADES_TIER_0 = ["swordOfficialV2", "pacifierOfficialV2", "peacekeeperOfficialV2", "invaderOfficialV2", "centaurOfficialV2"];
+*/
+
 Class.addons.UPGRADES_TIER_0.push("dreadOfficialV2");
-	Class.dreadOfficialV2.UPGRADES_TIER_0 = [
-		["sword2OfficialV2", "dreadBodyOfficialV2",],
-		["pacifier2OfficialV2", "dreadBodyOfficialV2"],
-		["peacekeeper2OfficialV2", "dreadBodyOfficialV2"],
-		["invader2OfficialV2", "dreadBodyOfficialV2"],
-		["centaur2OfficialV2", "dreadBodyOfficialV2"],
-	];
 
 	Class.sword2OfficialV2.UPGRADES_TIER_0 = ["swordOfficialV2"];
 	Class.pacifier2OfficialV2.UPGRADES_TIER_0 = ["pacifierOfficialV2"];
 	Class.peacekeeper2OfficialV2.UPGRADES_TIER_0 = ["peacekeeperOfficialV2"];
 	Class.invader2OfficialV2.UPGRADES_TIER_0 = ["invaderOfficialV2"];
 	Class.centaur2OfficialV2.UPGRADES_TIER_0 = ["centaurOfficialV2"];
-
-	Class.dreadWeaponOfficialV2.UPGRADES_TIER_0 = ["swordOfficialV2", "pacifierOfficialV2", "peacekeeperOfficialV2", "invaderOfficialV2", "centaurOfficialV2"];
 
 		Class.swordOfficialV2.UPGRADES_TIER_0 = ["gladiusOfficialV2", "sabreOfficialV2"];
 			Class.gladiusOfficialV2.UPGRADES_TIER_0 = ["bladeOfficialV2"];

@@ -146,24 +146,24 @@ class BossRush {
         let o = new Entity(tile.loc);
         this.defineSanctuary(o, team, type);
         this.sanctuaries.push(o);
-        let spawnableTeam = room.spawnable[Object.keys(room.spawnable).find((key) => room.spawnable[key].includes(tile))];
+        let spawnableArea = room.spawnable[Object.keys(room.spawnable).find((key) => room.spawnable[key].includes(tile))];
         o.on('dead', () => {
             if (o.team === TEAM_ENEMIES) {
+                // Allow the player to spawn so we add it to the spawnable locations.
+                room.spawnable[TEAM_BLUE].push(tile);
+
                 this.spawnSanctuary(tile, TEAM_BLUE, `sanctuaryTier${this.sanctuaryTier}`);
                 tile.color.interpret(getTeamColor(TEAM_BLUE));
                 this.leftSanctuaries++;
                 sockets.broadcast('A sanctuary has been repaired! ' + this.leftSanctuaries + ' sanctuaries remain.');
-                if (team !== spawnableTeam) { // Allow the player to spawn so we add it to the spawnable locations.
-                    room.spawnable[TEAM_BLUE].push(tile);
-                }
             } else {
+                // Don't allow players to spawn at the destroyed sanctuary so we remove it from spawnable location.
+                util.remove(spawnableArea, spawnableArea.indexOf(tile));
+
                 this.spawnSanctuary(tile, TEAM_ENEMIES, "dominator");
                 tile.color.interpret(getTeamColor(TEAM_ENEMIES));
                 this.leftSanctuaries--;
                 sockets.broadcast('A sanctuary has been destroyed! ' + this.leftSanctuaries + ' sanctuaries remain.');
-                if (team !== spawnableTeam) { // Don't allow players to spawn at the destroyed sanctuary so we remove it from spawnable location.
-                    util.remove(spawnableTeam, spawnableTeam.indexOf(tile));
-                }
             }
             sockets.broadcastRoom();
         });

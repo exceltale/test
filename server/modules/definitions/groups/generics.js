@@ -229,7 +229,7 @@ Class.drone = {
     BODY: {
         PENETRATION: 1.2,
         PUSHABILITY: 0.6,
-        ACCELERATION: 0.05,
+        ACCELERATION: 0.085,
         HEALTH: 0.3,
         DAMAGE: 3.375,
         SPEED: 3.8,

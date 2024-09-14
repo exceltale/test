@@ -567,11 +567,11 @@ class Canvas {
               if (this.videoRecorder)
                 switch (this.videoRecorder.state) {
                   case "inactive":
-                    global.createMessage("Recorder Started!", 2_000);
+                    global.createMessage("Recorder started!", 2_000);
                     this.videoRecorder.start();
                     break;
                   case "recording":
-                    global.createMessage("Recorder Stopped! Saving file...", 5_000);
+                    global.createMessage("Recorder stopped! Saving file...", 5_000);
                     this.videoRecorder.stop();
                 }
               else {
@@ -587,7 +587,7 @@ class Canvas {
                   let k = URL.createObjectURL(a),
                     q = document.createElement("a");
                   q.style.display = "none";
-                  q.setAttribute("download", "arras.mp4");
+                  q.setAttribute("download", "osa-video.mp4");
                   q.setAttribute("href", k);
                   document.body.appendChild(q);
                   setTimeout(() => {
@@ -596,11 +596,11 @@ class Canvas {
                   }, 100);
                   q.click();
                 };
-                global.createMessage("Recorder Started!", 2_000);
+                global.createMessage("Recorder started!", 2_000);
                 this.videoRecorder.start();
               }
             else
-            global.createMessage("Cannot record due to outdated/unsupported browser. Please update your browser!", 6_000);
+            global.createMessage("Recording video requires an up-to-date browser.", 6_000);
       }
       screenshot() {
         var x = this.cv.toDataURL(),
@@ -611,7 +611,7 @@ class Canvas {
         let q = URL.createObjectURL(new Blob([p], {type: x})),
         w = document.createElement("a");
         w.style.display = "none";
-        w.setAttribute("download", "arras.png");
+        w.setAttribute("download", "osa-screenshot.png");
         w.setAttribute("href", q);
         document.body.appendChild(w);
         setTimeout(() => {

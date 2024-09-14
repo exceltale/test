@@ -193,17 +193,24 @@ class PortalLoop {
                         buffer: 0,
                         spawnArray: validPositions,
                         handler: (entity) => {
+                            if (entity.team == TEAM_DREADNOUGHTS) return;
+
                             entity.reset(); // Remove non-player controllers
+                            entity.skill.set(Array(10).fill(0)); // Purge skill upgrades
                             entity.define({ // Purge all unwanted entity config
                                 STAT_NAMES: {},
                                 IS_SMASHER: false,
                                 ALPHA: [0, 1],
                                 INVISIBLE: [0, 0],
                             });
-                            entity.destroyAllChildren();
                             entity.upgrades = [];
                             entity.define('dreadOfficialV1');
                             entity.team = TEAM_DREADNOUGHTS;
+
+                            // Fix minimap
+                            if (entity.socket) {
+                                entity.socket.player.team = entity.team;
+                            }
                         },
                         entryBarrier: (entity) => {
                             return entity.skill.level >= 150;
@@ -263,7 +270,7 @@ class PortalLoop {
                     if (other.type != 'tank') {
                         if (
                             other.type != "miniboss" && other.type != "food" && other.type != "crasher" && other.type != "aura" && other.type != "wall" && other.type != "unknown" &&
-                            (other.x - entity.x) ** 2 + (other.y - entity.y) ** 2 <= 625
+                            (other.x - entity.x) ** 2 + (other.y - entity.y) ** 2 <= (other.size + entity.size) ** 2
                         ) {
                             other.kill();
                         }
@@ -283,6 +290,7 @@ class PortalLoop {
                         other.y = ran.irandomRange(portal.destination.yMin, portal.destination.yMax);
                     }
                     other.invuln = true;
+                    other.destroyAllChildren();
                     
                     // Set new confinement
                     other.confinement.xMin = portal.destination.xMin - portal.buffer;

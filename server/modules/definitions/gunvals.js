@@ -63,7 +63,7 @@ module.exports = {
     maleficitor: { reload: 0.25, size: 1.05, health: 1.15, damage: 1.15, pen: 1.15, speed: 0.8, maxSpeed: 0.8, density: 1.15 },
     summoner: { reload: 0.3, size: 1.125, health: 0.5, damage: 0.345, pen: 0.4, density: 0.8 },
     minionGun: { recoil: 0, shudder: 2, health: 0.4, damage: 0.4, pen: 1.2, range: 0.75, spray: 2 },
-    babyfactory: { reload: 1.5, maxSpeed: 1.35 },
+    babyfactory: { reload: 1.5, maxSpeed: 1.25 },
     bigCheese: { reload: 1.5, size: 1.8, health: 2.5, speed: 1.25 },
     mothership: { reload: 1.25, pen: 1.1, speed: 0.775, maxSpeed: 0.8, range: 15, resist: 1.15 },
     satellite: { size: 0.8, reload: 3, damage: 1.875 },

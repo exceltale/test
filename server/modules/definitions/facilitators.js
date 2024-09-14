@@ -81,6 +81,8 @@ exports.skillSet = (args) => {
 
 // functions
 exports.dereference = type => {
+    type = ensureIsClass(type);
+
     let output = JSON.parse(JSON.stringify(type));
     if (type.GUNS) {
         for (let i = 0; i < type.GUNS.length; i++) {
@@ -410,7 +412,7 @@ exports.makeRadialAuto = (type, options = {}) => {
     let turretIdentifier = type;
 
     if (!isTurret) {
-        type = exports.dereference(ensureIsClass(type));
+        type = exports.dereference(type);
 
         let extraStats = options.extraStats ?? [];
         if (!Array.isArray(extraStats)) {
@@ -473,7 +475,7 @@ exports.makeTurret = (type, options = {}) => {
     - independent: turret independence
     */
 
-    type = exports.dereference(ensureIsClass(type));
+    type = exports.dereference(type);
 
     let CONTROLLERS = [];
     if (options.canRepel) { // default false
@@ -541,7 +543,7 @@ exports.addAura = (damageFactor = 1, sizeFactor = 1, opacity = 0.3, auraColor) =
     };
 }
 exports.setTurretProjectileRecoil = (type, recoilFactor) => {
-    type = exports.dereference(ensureIsClass(type));
+    type = exports.dereference(type);
 
     if (!type.GUNS) return;
     

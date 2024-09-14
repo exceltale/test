@@ -95,7 +95,6 @@ exports.flattenDefinition = (output, definition) => {
       if (!Array.isArray(definition.PARENT)) {
         exports.flattenDefinition(output, definition.PARENT);
       } else for (let parent of definition.PARENT) {
-        if(mockupsLoaded) for (let k in parent) console.log(k, parent[k])
         exports.flattenDefinition(output, parent);
       }
   }

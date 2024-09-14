@@ -2413,7 +2413,7 @@ const gameDrawDead = () => {
     drawText(getDeath(), x - 170, y + 99, 16, color.guiwhite);
     drawText(getTips(), x - 170, y + 122, 16, color.guiwhite);
     drawText("🦆 The server was " + +(100 * gui.fps).toFixed(0) + "%" + " active", x - 170, y + 144, 16, color.guiwhite);
-    drawText(global.cannotRespawn ? global.respawnTimeout ? "(" + global.respawnTimeout + " Secon" + `${global.respawnTimeout <= 1 ? 'd' : 'ds'} ` + "left to respawn)" : "(You cannot respawn)" : global.mobile ? "(Tap to respawn)" : "(Press enter to respawn)", x, y + 189, 16, color.guiwhite, "center");
+    drawText(global.cannotRespawn ? global.respawnTimeout ? "(" + global.respawnTimeout + " Secon" + `${global.respawnTimeout <= 1 ? 'd' : 'ds'} ` + "left to respawn)" : "(you cannot respawn!)" : global.mobile ? "(tap to respawn)" : "(press enter to respawn)", x, y + 189, 16, color.guiwhite, "center");
     ctx.translate(0, shift * global.screenHeight);
 };
 const gameDrawOldDead = () => {

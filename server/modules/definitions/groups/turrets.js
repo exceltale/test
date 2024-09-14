@@ -584,10 +584,11 @@ Class.pillboxTurret = makeTurret({
             PROPERTIES: {
                 SHOOT_SETTINGS: combineStats([g.basic, g.minionGun, g.turret, g.power, g.autoTurret, { density: 0.1 }]),
                 TYPE: "bullet",
+                WAIT_TO_CYCLE: true
             },
         },
     ],
-}, {extraStats: []})
+}, {independent: true, extraStats: []})
 Class.autoSmasherMissileTurret = makeTurret({
     HAS_NO_RECOIL: true,
     GUNS: [

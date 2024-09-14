@@ -1027,7 +1027,7 @@ Class.gunBenchmark = {
 
 Class.levels = menu("Levels")
 Class.levels.UPGRADES_TIER_0 = []
-for (let i = 0; i < 12; i++) {
+for (let i = 0; i < 16; i++) {
     let LEVEL = i * Config.TIER_MULTIPLIER;
     Class["level" + LEVEL] = {
         PARENT: "levels",
@@ -1049,6 +1049,12 @@ for (let i = 1; i <= 8; i++) {
     };
     Class.teams.UPGRADES_TIER_0.push("Team" + TEAM);
 }
+Class['Team' + TEAM_DREADNOUGHTS] = {
+    PARENT: "teams",
+    TEAM: TEAM_DREADNOUGHTS,
+    COLOR: getTeamColor(TEAM_DREADNOUGHTS),
+    LABEL: "Dreads Team"
+};
 Class['Team' + TEAM_ROOM] = {
     PARENT: "teams",
     TEAM: TEAM_ROOM,
@@ -1061,7 +1067,7 @@ Class['Team' + TEAM_ENEMIES] = {
     COLOR: "yellow",
     LABEL: "Enemies Team"
 };
-Class.teams.UPGRADES_TIER_0.push('Team' + TEAM_ROOM, 'Team' + TEAM_ENEMIES);
+Class.teams.UPGRADES_TIER_0.push('Team' + TEAM_DREADNOUGHTS, 'Team' + TEAM_ROOM, 'Team' + TEAM_ENEMIES);
 
 Class.testing = menu("Testing")
 
